@@ -14,7 +14,7 @@ import {
   HStack,
 } from '@gluestack-ui/themed';
 import {config} from '@gluestack-ui/config';
-import {initDatabase, insertUser, getUserByEmail,getAllUsers} from '../database/database';
+import {getUserByEmail,getAllUsers} from '../database/database';
 
 export default function Login({navigation}: any) {
   const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ export default function Login({navigation}: any) {
 
   const handleLogin = async () => {
     if (email && password) {
-
+      getUserByEmail
     } else {
       console.log('Please fill all fields');
     }

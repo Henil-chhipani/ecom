@@ -14,7 +14,7 @@ import {
 } from '@gluestack-ui/themed';
 import {config} from '@gluestack-ui/config';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {initDatabase, insertUser, getUserByEmail,getAllUsers} from '../database/database';
+import { insertUser, getUserByEmail,getAllUsers} from '../database/database';
 
 export default function Signup({navigation}:any) {
   const [name, setName] = useState('');
@@ -23,9 +23,9 @@ export default function Signup({navigation}:any) {
   const [password, setPassword] = useState('');
   const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    initDatabase();
-  }, []);
+  // useEffect(() => {
+  //   initDatabase();
+  // }, []);
 
   const handlePhoneNumberChange = text => {
     // Remove non-numeric characters
