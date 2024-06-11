@@ -23,12 +23,10 @@ export default function Signup({navigation}:any) {
   const [password, setPassword] = useState('');
   const [users, setUsers] = useState([]);
 
-  // useEffect(() => {
-  //   initDatabase();
-  // }, []);
+
 
   const handlePhoneNumberChange = text => {
-    // Remove non-numeric characters
+  
     const numericText = text.replace(/[^0-9]/g, '');
     setPhoneNumber(numericText);
   };

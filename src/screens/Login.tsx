@@ -15,33 +15,25 @@ import {
 } from '@gluestack-ui/themed';
 import {config} from '@gluestack-ui/config';
 import {getUserByEmailPassword} from '../database/database';
+import { useAuth } from '../contexts/AuthContext';
+
 
 export default function Login({navigation}: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useAuth();
 
-  // const handleLogin = async () => {
-  //   if (email && password) {
-  //     let user = getUserByEmailPassword(email,password)
-  //     if(!user){
-  //       console.log("incorrect email or password")
-  //     }else{
-  //       navigation.navigate("Home")
-  //     }
-  //   } else {
-  //     console.log('Please fill all fields');
-  //   }
-  // };
   const handleLogin = async () => {
     if (email && password) {
       try {
-        let user = await getUserByEmailPassword(email, password); // Await the async function call
+        // let user = await getUserByEmailPassword(email, password); // Await the async function call
+        let user = await login(email, password);
         if (!user) {
           console.log("Incorrect email or password");
         } else {
           setEmail('');
           setPassword('');
-          navigation.navigate("Home"); 
+          navigation.replace("Home"); 
         }
       } catch (error) {
         console.error("Error during login: ", error);
