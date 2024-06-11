@@ -33,7 +33,7 @@ export default function Login({navigation}: any) {
         } else {
           setEmail('');
           setPassword('');
-          navigation.replace("Home"); 
+          navigation.replace("Admin"); 
         }
       } catch (error) {
         console.error("Error during login: ", error);

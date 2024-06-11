@@ -77,17 +77,29 @@ export const getUserByEmailPassword = async (email:string, password: string) => 
     }
   };
 
-  export const getAllUsers = async () => {
-    try {
-    
-      const results = await db.executeSql("SELECT * FROM Users");
-      const users = [];
-      for (let i = 0; i < results[0].rows.length; i++) {
-        users.push(results[0].rows.item(i));
-      }
-      return users;
-    } catch (error) {
-      console.error("Error getting users: ", error);
-      return [];
+
+export const getAllUsers = async () => {
+  try {
+    const dbInstance = await db;
+    const results = await dbInstance.executeSql("SELECT * FROM Users");
+    let users = [];
+    for (let i = 0; i < results[0].rows.length; i++) {
+      users.push(results[0].rows.item(i));
     }
-  };
+    return users;
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+    return [];
+  }
+};
+
+export const deleteUser = async (id:any) => {
+  try {
+    const dbInstance = await db;
+     dbInstance.executeSql("DELETE FROM Users WHERE id = ?", [id]);
+    console.log(`User with id ${id} deleted successfully`);
+  } catch (error) {
+    console.error("Error deleting user: ", error);
+  }
+};
+

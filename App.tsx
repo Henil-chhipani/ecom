@@ -7,6 +7,7 @@ import Signup from './src/screens/Signup';
 import {initDatabase} from './src/database/database';
 import Home from './src/screens/Home';
 import {AuthProvider} from './src/contexts/AuthContext';
+import Admin from './src/screens/Admin';
 const Stack = createStackNavigator();
 
 export default function App() {
@@ -17,14 +18,15 @@ export default function App() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
+        <Stack.Navigator initialRouteName="Admin">
           <Stack.Screen
             name="Login"
             component={Login}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="Signup" component={Signup} />
-          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
+          <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
+          <Stack.Screen name="Admin" component={Admin} options={{headerShown: false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
