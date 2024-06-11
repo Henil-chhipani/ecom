@@ -14,19 +14,43 @@ import {
   HStack,
 } from '@gluestack-ui/themed';
 import {config} from '@gluestack-ui/config';
-import {getUserByEmail,getAllUsers} from '../database/database';
+import {getUserByEmailPassword} from '../database/database';
 
 export default function Login({navigation}: any) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // const handleLogin = async () => {
+  //   if (email && password) {
+  //     let user = getUserByEmailPassword(email,password)
+  //     if(!user){
+  //       console.log("incorrect email or password")
+  //     }else{
+  //       navigation.navigate("Home")
+  //     }
+  //   } else {
+  //     console.log('Please fill all fields');
+  //   }
+  // };
   const handleLogin = async () => {
     if (email && password) {
-      getUserByEmail
+      try {
+        let user = await getUserByEmailPassword(email, password); // Await the async function call
+        if (!user) {
+          console.log("Incorrect email or password");
+        } else {
+          setEmail('');
+          setPassword('');
+          navigation.navigate("Home"); 
+        }
+      } catch (error) {
+        console.error("Error during login: ", error);
+      }
     } else {
       console.log('Please fill all fields');
     }
   };
+
 
   return (
     <GluestackUIProvider config={config}>
@@ -65,7 +89,7 @@ export default function Login({navigation}: any) {
               mt="$10"
               width="$20"
               alignSelf="center"
-              borderRadius={20}>
+              borderRadius={20} onPress={handleLogin}>
               <ButtonText>Login </ButtonText>
             </Button>
           </Card>

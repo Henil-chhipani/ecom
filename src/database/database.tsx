@@ -31,26 +31,39 @@ export const initDatabase = async () => {
   }
 };
 
-export const insertUser = async (name:string, email:string, phone:string, password:string) => {
+
+
+export const insertUser = async (name: string, email: string, phone: string, password: string) => {
   try {
-    db.then(tx => {
-      tx.executeSql(
-        "INSERT INTO Users (name, email, phone, password) VALUES (?, ?, ?, ?)",
-        [name, email, phone, password]
-      );
-    });
-    console.log("User inserted successfully");
+    const dbInstance = await db;
+    await dbInstance.executeSql(
+      "INSERT INTO Users (name, email, phone, password) VALUES (?, ?, ?, ?)",
+      [name, email, phone, password]
+    );
+
+    const results = await dbInstance.executeSql(
+      "SELECT * FROM Users WHERE email = ?",
+      [email]
+    );
+
+    if (results[0].rows.length > 0) {
+      const user = results[0].rows.item(0);
+      console.log("User inserted successfully:", user);
+    } else {
+      console.log("User inserted but not found in database.");
+    }
   } catch (error) {
     console.error("Error inserting user: ", error);
   }
 };
 
-export const getUserByEmail = async (email:string) => {
+
+export const getUserByEmailPassword = async (email:string, password: string) => {
     try {
-    
-      const results = await db.executeSql(
-        "SELECT * FROM Users WHERE email = ?",
-        [email]
+      const dbInstance = await db;
+      const results = await dbInstance.executeSql(
+        "SELECT * FROM Users WHERE email = ? AND password = ?",
+        [email, password]
       );
       if (results[0].rows.length > 0) {
         return results[0].rows.item(0);
