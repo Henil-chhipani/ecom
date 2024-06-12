@@ -13,7 +13,7 @@ import {
   Box,
   
 } from '@gluestack-ui/themed';
-import { getAllUsers, deleteUser } from '../database/database';
+import { getAllUsers, deleteUser } from '../../database/database';
 import {config} from '@gluestack-ui/config';
 
 

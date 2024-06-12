@@ -13,11 +13,12 @@ import {
   Box,
   
 } from '@gluestack-ui/themed';
-import { getAllUsers, deleteUser } from '../database/database';
+import { getAllUsers, deleteUser } from '../../database/database';
 import {config} from '@gluestack-ui/config';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Admin_userList from './Admin_userList';
-import Signup from './Signup';
+import Signup from '../Signup';
+import Add_product from './Add_product';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,8 +26,8 @@ const Tab = createBottomTabNavigator();
 export default function Admin() {
 return(
     <Tab.Navigator>
-    <Tab.Screen name="User list" component={Admin_userList} options={{headerShown: false}}/>
-    <Tab.Screen name="Singnup" component={Signup} />
+    <Tab.Screen name="User list" component={Admin_userList} options={{headerShown: false, }} />
+    <Tab.Screen name="Add product" component={Add_product} />
     
   </Tab.Navigator>
 )
