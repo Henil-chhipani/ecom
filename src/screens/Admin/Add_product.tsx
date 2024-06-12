@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import {config} from '@gluestack-ui/config';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -16,20 +16,63 @@ import {
   Link,
   Textarea,
   TextareaInput,
+  ButtonIcon,
+  AddIcon,
 } from '@gluestack-ui/themed';
+import {insertProduct} from '../../database/database';
 
 export default function Add_product() {
   const [productName, setproductName] = useState('');
-  const [productPrice, seproductPrice] = useState('');
+  const [productPrice, setproductPrice] = useState('');
   const [productDis, setproductDis] = useState('');
   const [productCategory, setproductCategory] = useState('');
   const [productImg, setproductImg] = useState('');
+
+  const handleInsertProduct = async() => {
+    if (
+      productName &&
+      productPrice &&
+      productDis &&
+      productCategory &&
+      productImg
+    ) {
+      await insertProduct(
+        productName,
+        productPrice,
+        productDis,
+        productCategory,
+        productImg,
+      );
+      Alert.alert('Done', 'Product added Successfully', [
+        {
+          text: 'OK',
+        },
+      ]);
+      console.log('product added');
+setproductName('');
+setproductPrice('');
+setproductDis('');
+setproductCategory('');
+setproductImg('');
+
+
+    } else {
+        Alert.alert('Error', 'Fill all details', [
+            {
+              text: 'OK',
+            },
+          ]);
+      console.log('Please fill all fields');
+    }
+  };
+
+
 
   return (
     <GluestackUIProvider config={config}>
       <Card size="md" variant="elevated" m="$3">
         <Heading mb="$1" size="md">
-          hedainf
+          Fill product details
         </Heading>
         <Input
           m={10}
@@ -55,8 +98,9 @@ export default function Add_product() {
             isReadOnly={false}>
             <InputField
               placeholder="Product Price"
+              keyboardType="numeric"
               value={productPrice}
-              onChangeText={seproductPrice}
+              onChangeText={setproductPrice}
             />
           </Input>
           <Input
@@ -87,7 +131,7 @@ export default function Add_product() {
             onChangeText={setproductImg}
           />
         </Input>
-     
+
         <Textarea
           size="md"
           isReadOnly={false}
@@ -95,9 +139,24 @@ export default function Add_product() {
           isDisabled={false}
           w="auto"
           m={10}>
-          <TextareaInput placeholder="Your text goes here..."  value={productDis}
-            onChangeText={setproductDis} />
+          <TextareaInput
+            placeholder="Your text goes here..."
+            value={productDis}
+            onChangeText={setproductDis}
+          />
         </Textarea>
+
+        <Button
+          alignSelf="center"
+          w={100}
+          size="md"
+          variant="solid"
+          action="primary"
+          isDisabled={false}
+          isFocusVisible={false} onPress={handleInsertProduct}>
+          <ButtonText>Add </ButtonText>
+          <ButtonIcon as={AddIcon} w={2} />
+        </Button>
       </Card>
     </GluestackUIProvider>
   );

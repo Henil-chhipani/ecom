@@ -32,24 +32,24 @@ export default function Signup({navigation}:any) {
   };
 
  
-  const handleSignup = async () => {
-    if (name && email && phoneNumber && password) {
-      await insertUser(name, email, phoneNumber, password);
-      Alert.alert(
-        "Registration Successful",
-        "You have successfully signed up. Please log in.",
-        [
-          {
-            text: "OK",
-            onPress: () => navigation.navigate('Login')
-          }
-        ]
-      );
-      console.log('User signed up successfully');
-    } else {
-      console.log('Please fill all fields');
-    }
-  };
+    const handleSignup = async () => {
+      if (name && email && phoneNumber && password) {
+        await insertUser(name, email, phoneNumber, password);
+        Alert.alert(
+          "Registration Successful",
+          "You have successfully signed up. Please log in.",
+          [
+            {
+              text: "OK",
+              onPress: () => navigation.navigate('Login')
+            }
+          ]
+        );
+        console.log('User signed up successfully');
+      } else {
+        console.log('Please fill all fields');
+      }
+    };
 
 
   return (

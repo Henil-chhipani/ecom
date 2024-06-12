@@ -11,6 +11,9 @@ import {
   HStack,
   VStack,
   Box,
+  Icon,
+  MenuIcon,
+  AddIcon,
   
 } from '@gluestack-ui/themed';
 import { getAllUsers, deleteUser } from '../../database/database';
@@ -26,8 +29,18 @@ const Tab = createBottomTabNavigator();
 export default function Admin() {
 return(
     <Tab.Navigator>
-    <Tab.Screen name="User list" component={Admin_userList} options={{headerShown: false, }} />
-    <Tab.Screen name="Add product" component={Add_product} />
+    <Tab.Screen name="User list" component={Admin_userList}   options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon as={MenuIcon} size="md" color="skyblue"/>
+            ),
+            headerShown: false,
+          }}  />
+    <Tab.Screen name="Add product" component={Add_product} options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon as={AddIcon} size="md" color="skyblue"/>
+            ),
+            headerShown: false,
+          }}/>
     
   </Tab.Navigator>
 )

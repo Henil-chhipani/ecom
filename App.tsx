@@ -24,9 +24,21 @@ export default function App() {
             component={Login}
             options={{headerShown: false}}
           />
-          <Stack.Screen name="Signup" component={Signup} options={{headerShown: false}}/>
-          <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
-          <Stack.Screen name="Admin" component={Admin} options={{headerShown: false}}/>
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Admin"
+            component={Admin}
+            options={{headerShown: false}}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>
