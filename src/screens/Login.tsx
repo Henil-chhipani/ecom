@@ -17,6 +17,7 @@ import {config} from '@gluestack-ui/config';
 import {getUserByEmailPassword} from '../database/database';
 import { useAuth } from '../contexts/AuthContext';
 
+export const admins = ['admin@admin.com','henil@henil.com'];
 
 export default function Login({navigation}: any) {
   const [email, setEmail] = useState('');
@@ -33,7 +34,11 @@ export default function Login({navigation}: any) {
         } else {
           setEmail('');
           setPassword('');
-          navigation.replace("Admin"); 
+          if(admins.includes(user.email)){
+          navigation.replace("Admin"); }
+          else{
+            navigation.replace("Home"); 
+          }
         }
       } catch (error) {
         console.error("Error during login: ", error);

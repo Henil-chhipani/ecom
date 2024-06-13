@@ -14,7 +14,7 @@ import {
 } from '@gluestack-ui/themed';
 import {config} from '@gluestack-ui/config';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import { insertUser, getUserByEmail,getAllUsers} from '../database/database';
+import { insertUser, getUserByEmail} from '../database/database';
 
 export default function Signup({navigation}:any) {
   const [name, setName] = useState('');

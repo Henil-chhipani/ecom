@@ -24,8 +24,9 @@ export const initDatabase = async () => {
       tx.executeSql(
         'CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, phone TEXT, password TEXT)',
       );
+      
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS Products (id INTEGER PRIMARY KEY AUTOINCREMENT, product_name TEXT, product_price TEXT, product_dis TEXT, product_category TEXT, product_img TEXT)',
+        'CREATE TABLE IF NOT EXISTS Products (id INTEGER PRIMARY KEY AUTOINCREMENT, productName TEXT, productPrice TEXT, productDis TEXT, productCategory TEXT, productImg TEXT)',
       );
     });
     console.log('Table created successfully');
@@ -110,6 +111,7 @@ export const deleteUser = async (id: any) => {
   }
 };
 
+
 export const insertProduct = async (
   productName: any,
   productPrice: any,
@@ -119,24 +121,98 @@ export const insertProduct = async (
 ) => {
   try {
     const dbInstance = await db;
-    dbInstance.executeSql(
-      'INSERT INTO Products(product_name, product_price, product_dis, product_category, product_img) VALUES (?,?,?,?,?)',
+    await dbInstance.executeSql(
+      'INSERT INTO Products(productName, productPrice, productDis, productCategory, productImg) VALUES (?,?,?,?,?)',
       [productName, productPrice, productDis, productCategory, productImg],
     );
 
     const results = await dbInstance.executeSql(
-      'SELECT * FROM Products where product_price = ?',
-      [productPrice],
+      'SELECT * FROM Products WHERE productName = ?',
+      [productName],
     );
 
     if (results[0].rows.length > 0) {
-      const user = results[0].rows.item(0);
-      console.log('Product inserted successfully:', user);
+      const product = results[0].rows.item(0);
+      console.log('Product inserted successfully:', product);
     } else {
       console.log('Product inserted but not found in database.');
     }
-
   } catch (error) {
     console.error('Error inserting product:', error);
+  }
+};
+
+
+export const getAllProducts = async () => {
+  try {
+    const dbInstance = await db;
+    const results = await dbInstance.executeSql('SELECT * FROM Products');
+    let products = [];
+    for (let i = 0; i < results[0].rows.length; i++) {
+      products.push(results[0].rows.item(i));
+    }
+    console.log('products is : ', products);
+    return products;
+  } catch (error) {
+    console.log('Error while fetching product data:', error);
+    return [];
+  }
+};
+
+export const get = async()=>{
+  const dbInstance = await db;
+  const results  = await dbInstance.executeSql('Truncate table Products')
+  console.log("data: ",results);
+}
+
+export const deleteProduct = async (id) => {
+  try {
+    const dbInstance = await db;
+    await dbInstance.executeSql('DELETE FROM Products WHERE id = ?', [id]);
+    console.log(`Product with id ${id} deleted successfully`);
+  } catch (error) {
+    console.error('Error deleting product:', error);
+  }
+};
+
+
+export const insertSampleProducts = async () => {
+  const sampleProducts = [
+    {
+      productName: 'Product 1',
+      productPrice: '10.99',
+      productDis: 'Description for Product 1',
+      productCategory: 'Category 1',
+      productImg: 'https://via.placeholder.com/150',
+    },
+    {
+      productName: 'Product 2',
+      productPrice: '20.99',
+      productDis: 'Description for Product 2',
+      productCategory: 'Category 2',
+      productImg: 'https://via.placeholder.com/150',
+    },
+    {
+      productName: 'Product 3',
+      productPrice: '30.99',
+      productDis: 'Description for Product 3',
+      productCategory: 'Category 3',
+      productImg: 'https://via.placeholder.com/150',
+    },
+  ];
+
+  try {
+    const dbInstance = await db;
+
+    for (const product of sampleProducts) {
+      await dbInstance.executeSql(
+        'INSERT INTO Products (productName, productPrice, productDis, productCategory, productImg) VALUES (?, ?, ?, ?, ?)',
+        [product.productName, product.productPrice, product.productDis, product.productCategory, product.productImg]
+      );
+    }
+
+    console.log('Sample products inserted successfully');
+  } catch (error) {
+    console.error('Error inserting sample products:', error);
   }
 };
