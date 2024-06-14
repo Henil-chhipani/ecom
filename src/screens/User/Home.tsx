@@ -79,7 +79,7 @@ export default function Home({navigation}: any) {
           <Heading fontSize={30} alignSelf="center">
             Products
           </Heading>
-          <Button onPress={logoutPress} alignSelf="flex-end">
+          <Button onPress={logoutPress} alignSelf="flex-end" borderRadius={10}>
             <ButtonText>Logout</ButtonText>
           </Button>
         </HStack>

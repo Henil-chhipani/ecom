@@ -38,7 +38,7 @@ navigation.replace('Login');
 
   return (
     <SafeAreaView style={{flex:1}}>
-   <Button onPress={logoutPress} width={100} margin={10} alignSelf="flex-end">
+   <Button onPress={logoutPress} width={100} margin={10} alignSelf="flex-end" borderRadius={10}>
     <ButtonText>Logout</ButtonText>
   </Button>
     <Tab.Navigator>
